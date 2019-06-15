@@ -46,11 +46,11 @@ class ExpenseRecords():
             data = cur.fetchall()
 
             if data is None:
-                return jsonify({"Message":"No expenses in database for this meetup"}), 404
+                return jsonify({"Message":"No expenses found"}), 404
 
             expenses_data = {
-                "Status": 200,
-                "questions": data
+                "status": 200,
+                "exppenses": data
                 }, 200
 
             return jsonify(expenses_data)
