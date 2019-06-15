@@ -64,7 +64,7 @@ class ExpenseRecords():
         '''get one question'''
         try:
             cur = INIT_DB.cursor(cursor_factory=RealDictCursor)
-            cur.execute(""" SELECT * FROM expenses WHERE account_id = '%d' """ %(expense_id))
+            cur.execute(""" SELECT * FROM expenses WHERE expense_id = '%d' """ %(expense_id))
             data = cur.fetchone()
 
             if data is None:
@@ -98,14 +98,11 @@ def view_expenses():
         data = cur.fetchall()
 
         if data is None:
-            print(data)
             return jsonify({"message":"No data for that date"})
-
-        expense = data
 
         return jsonify({
             "status":200,
-            "expense":expense}), 200
+            "expense":data}), 200
 
     except (psycopg2.Error) as error:
         return jsonify(error)

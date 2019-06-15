@@ -74,7 +74,7 @@ def get_expenses():
     '''Allow users to get all question'''
     return EXPENSE_RECORDS.get_all_expenses()
 
-@EXPENSES.route('/expenses/<int:account_id>', methods=['GET'])
+@EXPENSES.route('/expenses/<int:expense_id>', methods=['GET'])
 def get_one_expense(expense_id):
     '''Query an expense via date'''
     return EXPENSE_RECORDS.get_one_expense(expense_id)
