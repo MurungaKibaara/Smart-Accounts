@@ -10,7 +10,6 @@ from app.api.models.database_connection import init_db
 INIT_DB = init_db()
 
 EXPENSES = Blueprint('expenses', __name__)
-EXPENSES_QUERY = Blueprint('query_expenses', __name__)
 
 EXPENSE_RECORDS = ExpenseRecords()
 
