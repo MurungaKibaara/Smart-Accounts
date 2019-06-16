@@ -49,12 +49,7 @@ class CreditorsRecords():
             if data is None:
                 return jsonify({"Message":"No creditor found"}), 404
 
-            debt_data = {
-                "status": 200,
-                "credit info": data
-                }, 200
-
-            return jsonify(debt_data)
+            return jsonify(data)
 
         except psycopg2.Error:
             return jsonify({"Error":"Could not get any creditor"}), 400
@@ -71,9 +66,7 @@ class CreditorsRecords():
             if data is None:
                 return jsonify({"message":"No creditor by that id"}), 404
 
-            return jsonify(
-                {"status": 200},
-                data), 200
+            return jsonify(data)
 
         except psycopg2.Error:
             return jsonify({
