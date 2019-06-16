@@ -26,23 +26,26 @@ def tables():
             account character varying(1000) NOT NULL,
             amount INT NOT NULL,
             description character varying(1000) NOT NULL,
-            expense_date DATE DEFAULT CURRENT_DATE);
+            expense_date DATE DEFAULT CURRENT_DATE,
+            created_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
             """
 
     debtors_db = """CREATE TABLE IF NOT EXISTS debtors (
+            debtor_id serial PRIMARY KEY NOT NULL,
             name character varying(1000) NOT NULL,
-            phonenumber serial PRIMARY KEY NOT NULL,
-            amount INTEGER NOT NULL,
+            amount INT NOT NULL,
             description character varying(1000) NOT NULL,
-            debt_date DATE NOT NULL DEFAULT CURRENT_DATE);
+            debt_date DATE NOT NULL DEFAULT CURRENT_DATE,
+            created_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
             """
 
-    creditors_db = """CREATE TABLE IF NOT EXISTS questions (
+    creditors_db = """CREATE TABLE IF NOT EXISTS creditors (
             name character varying(1000) NOT NULL,
-            phonenumber serial PRIMARY KEY NOT NULL,
-            amount INTEGER NOT NULL,
+            creditor_id serial PRIMARY KEY NOT NULL,
+            amount INT NOT NULL,
             description character varying(1000) NOT NULL,
-            credit_date DATE NOT NULL DEFAULT CURRENT_DATE);
+            credit_date DATE NOT NULL DEFAULT CURRENT_DATE,
+            created_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
             """
 
     queries = [expenses_db, debtors_db, creditors_db]

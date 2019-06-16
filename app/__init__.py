@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from instance.config import APP_CONFIG, DevelopmentConfig
 from app.api.models.database_connection import init_db, create_tables
 from app.api.views.expenses_views import EXPENSES
+from app.api.views.debtors_views import DEBTORS
 
 def create_app(config_name):
     '''create app'''
@@ -18,6 +19,7 @@ def create_app(config_name):
 
     app.config.from_pyfile('config.py')
     app.register_blueprint(EXPENSES, url_prefix='/api/views/')
+    app.register_blueprint(DEBTORS, url_prefix='/api/views/')
     
     @app.errorhandler(404)
     def page_not_found(message):
