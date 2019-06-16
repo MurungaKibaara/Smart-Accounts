@@ -4,8 +4,9 @@ from datetime import datetime
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from flask import Blueprint, request, jsonify, make_response
-from app.api.models.debtors_model import DebtRecords, view_debts_by_date, view_debts_by_name
+from app.api.models.debtors_model import DebtRecords
 from app.api.models.database_connection import init_db
+from app.api.utils.validation import validate
 
 INIT_DB = init_db()
 
@@ -24,29 +25,9 @@ def post_debt():
         amount = data["amount"]
         description = data["description"]
 
-        if not description.strip():
-            return jsonify({"error": "Description cannot be empty"}), 400
-
-        if not name.strip():
-            return jsonify({"error": "name cannot be empty"}), 400
-
-        if not re.match(r"^[A-Za-z][a-zA-Z]", name):
-            return jsonify({"error":"input valid name"}), 400
-
-        if not date.strip():
-            return jsonify({"error": "Date cannot be empty"}), 400
-        
-        if not re.match(r"^((0|1|2)[0-9]{1}|(3)[0-1]{1})-((0)[0-9]{1}|(1)[0-2]{1})-((19)[0-9]{2}|(20)[0-9]{2})$",date):
-            return jsonify({"error":"input correct date format"}), 400
-
-        if not amount.strip():
-            return jsonify({"error": "Amount cannot be empty"}), 400
-        
-        if not re.match(r"^[0-9]", amount):
-            return jsonify({"error": "Enter a valid amount"}), 400
+        validate(name, amount, description, date)
 
         format_date = datetime.strptime(date, '%d-%m-%Y').strftime('%Y-%m-%d')
-        print(amount)
         
         cur = INIT_DB.cursor(cursor_factory=RealDictCursor)
         cur.execute(
@@ -85,9 +66,14 @@ def get_one_debt(debtor_id):
 @DEBTORS.route('debts/date', methods=['POST'])
 def query_by_date():
     '''Query via date'''
-    return view_debts_by_date()
+    return DEBT_RECORDS.view_debts_by_date()
 
 @DEBTORS.route('debts/name', methods=['POST'])
 def query_by_name():
     '''Query via date'''
-    return view_debts_by_name()
+    return DEBT_RECORDS.view_debts_by_name()
+
+@DEBTORS.route('debts/repay', methods=['POST'])
+def update_repayments():
+    '''Update records'''
+    return DEBT_RECORDS.debt_repayment_record()
