@@ -7,11 +7,14 @@ from app.api.models.database_connection import init_db, create_tables
 from app.api.views.expenses_views import EXPENSES
 from app.api.views.debtors_views import DEBTORS
 from app.api.views.creditors_views import CREDITORS
+from flask import Flask
+from flask_cors import CORS
 
 def create_app(config_name):
     '''create app'''
 
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app)
     app.config.from_object(APP_CONFIG[config_name])
 
     with app.app_context():
