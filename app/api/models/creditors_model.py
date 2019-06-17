@@ -47,14 +47,14 @@ class CreditorsRecords():
             data = cur.fetchall()
 
             if data is None:
-                return jsonify({"Message":"No creditor found"}), 404
+                return jsonify({"message":"No creditor found"}), 404
 
             return jsonify(data)
 
         except psycopg2.Error:
-            return jsonify({"Error":"Could not get any creditor"}), 400
+            return jsonify({"error":"Could not get any creditor"}), 400
 
-        return jsonify({"Message":"No debt found"}), 400
+        return jsonify({"message":"No debt found"}), 400
 
     def get_one_creditor(self, credit_id):
         '''get one creditor'''
@@ -102,19 +102,13 @@ class CreditorsRecords():
             try:
                 debt_remaining = total_amount
 
-                return jsonify({
-                    "status": 200,
-                    "remaining debt": debt_remaining,
-                    "message": "successfully update debt record"
-                }), 200
+                return jsonify(debt_remaining),
 
             except psycopg2.Error:
-                return jsonify({
-                    "status": 400,
-                    "error":"not updated"}), 400
+                return jsonify({"error":"not updated"}), 400
 
         except KeyError:
-            return jsonify({"error":"a key is missing"})
+            return jsonify({"error":"a key is missing"}), 400
 
 
     def view_creditors_by_date(self):
@@ -136,11 +130,9 @@ class CreditorsRecords():
             data = cur.fetchall()
 
             if data is None:
-                return jsonify({"message":"No data for that date"})
+                return jsonify({"message":"No data for that date"}), 404
 
-            return jsonify({
-                "status":200,
-                "expense":data}), 200
+            return jsonify(data)
 
         except (psycopg2.Error) as error:
             return jsonify(error)
@@ -166,9 +158,7 @@ class CreditorsRecords():
             if data is None:
                 return jsonify({"message":"name user does not exist"})
 
-            return jsonify({
-                "status":200,
-                "expense":data}), 200
+            return jsonify(data)
 
         except (psycopg2.Error) as error:
             return jsonify(error)

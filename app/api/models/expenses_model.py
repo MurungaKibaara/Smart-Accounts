@@ -53,7 +53,7 @@ class ExpenseRecords():
                 "exppenses": data
                 }, 200
 
-            return jsonify(expenses_data)
+            return jsonify(data)
 
         except psycopg2.Error:
             return jsonify({"Error":"Could not get any expenses"}), 400
@@ -70,14 +70,10 @@ class ExpenseRecords():
             if data is None:
                 return jsonify({"message":"No expense by that date"}), 404
 
-            return jsonify(
-                {"status": 200},
-                data), 200
+            return jsonify(data)
 
         except psycopg2.Error:
-            return jsonify({
-                "status": 400,
-                "error":"error retrieving data from database"}), 400
+            return jsonify({"error":"error retrieving data from database"}), 400
 
 def view_expenses():
     '''Search for an expense using date'''
@@ -85,7 +81,7 @@ def view_expenses():
         date = request.get_json()["date"]
 
         if not date.strip():
-            return jsonify({"error": "Date cannot be empty"}), 400
+            return jsonify({"error": "date cannot be empty"}), 400
 
         if not re.match(r"^((0|1|2)[0-9]{1}|(3)[0-1]{1})-((0)[0-9]{1}|(1)[0-2]{1})-((19)[0-9]{2}|(20)[0-9]{2})$",date):
             return jsonify({"error":"input correct date format"}), 400
@@ -98,11 +94,9 @@ def view_expenses():
         data = cur.fetchall()
 
         if data is None:
-            return jsonify({"message":"No data for that date"})
+            return jsonify({"message":"no data for that date"})
 
-        return jsonify({
-            "status":200,
-            "expense":data}), 200
+        return jsonify(data)
 
     except (psycopg2.Error) as error:
         return jsonify(error)

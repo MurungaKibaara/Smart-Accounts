@@ -38,7 +38,7 @@ class DebtRecords():
 
         except (psycopg2.Error) as error:
             print(error)
-            return jsonify({"error":"postgres error"})
+            return jsonify({"error":"error posting to database"})
 
     def get_all_debts(self):
         '''Get all debts'''
@@ -48,19 +48,14 @@ class DebtRecords():
             data = cur.fetchall()
 
             if data is None:
-                return jsonify({"Message":"No debt/debtor found"}), 404
+                return jsonify({"message":"No debt/debtor found"}), 404
 
-            debt_data = {
-                "status": 200,
-                "debts": data
-                }, 200
-
-            return jsonify(debt_data)
+            return jsonify(data)
 
         except psycopg2.Error:
-            return jsonify({"Error":"Could not get any debt"}), 400
+            return jsonify({"error":"Could not get any debt"}), 400
 
-        return jsonify({"Message":"No debt found"}), 400
+        return jsonify({"message":"No debt found"}), 400
 
     def get_one_debt(self, debtor_id):
         '''get one debt'''
@@ -77,9 +72,7 @@ class DebtRecords():
                 data), 200
 
         except psycopg2.Error:
-            return jsonify({
-                "status": 400,
-                "error":"error retrieving data from database"}), 400
+            return jsonify({"error":"error retrieving data from database"}), 400
 
     def debt_repayment_record(self):
         '''Update debt record'''
@@ -104,22 +97,14 @@ class DebtRecords():
             total_amount= data[0]
 
             if data is None:
-                return jsonify({
-                    "status": 400,
-                    "message": "No debt by that name"}), 404
+                return jsonify({"message": "No debt by that name"}), 404
             try:
                 debt_remaining = total_amount
 
-                return jsonify({
-                    "status": 200,
-                    "remaining debt": debt_remaining,
-                    "message": "successfully update debt record"
-                }), 200
+                return jsonify(debt_remaining), 200
 
             except psycopg2.Error:
-                return jsonify({
-                    "status": 400,
-                    "error":"not updated"}), 400
+                return jsonify({"error":"not updated"}), 400
 
         except KeyError:
             return jsonify({"error":"a key is missing"})
@@ -146,9 +131,7 @@ class DebtRecords():
             if data is None:
                 return jsonify({"message":"No data for that date"})
 
-            return jsonify({
-                "status":200,
-                "expense":data}), 200
+            return jsonify(data), 200
 
         except (psycopg2.Error) as error:
             return jsonify(error)
@@ -174,9 +157,7 @@ class DebtRecords():
             if data is None:
                 return jsonify({"message":"name user does not exist"})
 
-            return jsonify({
-                "status":200,
-                "expense":data}), 200
+            return jsonify(data), 200
 
         except (psycopg2.Error) as error:
             return jsonify(error)
