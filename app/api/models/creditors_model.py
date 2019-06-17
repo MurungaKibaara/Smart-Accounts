@@ -36,8 +36,9 @@ class CreditorsRecords():
             return jsonify({"message":"successfully posted"})
 
         except (psycopg2.Error) as error:
-            print(error)
-            return jsonify({"error":"error posting to database"})
+            cur = conn.cursor()
+            cur.execute("ROLLBACK")
+            self.database.commit()
 
     def get_all_creditors(self):
         '''Get all creditors'''
