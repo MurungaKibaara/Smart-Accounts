@@ -37,7 +37,7 @@ class DebtRecords():
             return jsonify({"message":"successfully posted"})
 
         except (psycopg2.Error) as error:
-            cur = conn.cursor()
+            cur = self.database.cursor()
             cur.execute("ROLLBACK")
             self.database.commit()
 
