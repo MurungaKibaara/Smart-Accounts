@@ -36,7 +36,7 @@ class ExpenseRecords():
 
         except (psycopg2.Error) as error:
             print(error)
-            return jsonify({"error":"postgres error"})
+            return jsonify({"error":"error posting to database"})
 
     def get_all_expenses(self):
         '''Get all questions'''
@@ -46,19 +46,14 @@ class ExpenseRecords():
             data = cur.fetchall()
 
             if data is None:
-                return jsonify({"Message":"No expenses found"}), 404
-
-            expenses_data = {
-                "status": 200,
-                "exppenses": data
-                }, 200
+                return jsonify({"message":"expenses not found"}), 404
 
             return jsonify(data)
 
         except psycopg2.Error:
-            return jsonify({"Error":"Could not get any expenses"}), 400
+            return jsonify({"error":"Could not get any expenses"}), 400
 
-        return jsonify({"Message":"No expenses found, add more expenses"}), 400
+        return jsonify({"message":"expenses not found"}), 400
 
     def get_one_expense(self, expense_id):
         '''get one question'''

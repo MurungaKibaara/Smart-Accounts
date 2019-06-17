@@ -37,7 +37,7 @@ class CreditorsRecords():
 
         except (psycopg2.Error) as error:
             print(error)
-            return jsonify({"error":"postgres error"})
+            return jsonify({"error":"error posting to database"})
 
     def get_all_creditors(self):
         '''Get all creditors'''
