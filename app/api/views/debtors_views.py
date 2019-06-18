@@ -41,7 +41,7 @@ def post_debt():
 
                 if ((db_amount == int_amount) and debt["name"]==name and (debt["description"]==description)):
                     print(debt["name"])
-                    return jsonify({"message":"Debt already posted"})
+                    return jsonify({"message":"debt already posted"})
 
         try:
             return DEBT_RECORDS.add_debt(name, amount, description, format_date)
