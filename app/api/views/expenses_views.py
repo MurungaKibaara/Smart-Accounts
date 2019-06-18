@@ -19,10 +19,10 @@ def post_expense():
     try:
         data = request.get_json()
 
-        date = data['date']
-        amount = data['amount']
-        account = data['account']
-        description = data['description']
+        date = data["date"]
+        amount = data["amount"]
+        account = data["account"]
+        description = data["description"]
 
         name = account
 
