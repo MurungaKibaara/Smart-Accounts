@@ -54,7 +54,8 @@ def post_expense():
                     
     except KeyError:
         return jsonify({"error": "a key is missing"}), 400
-    except form_data = None:
+
+    except (form_data = None):
         return jsonify({"error":"form data is empty"})
 
 
