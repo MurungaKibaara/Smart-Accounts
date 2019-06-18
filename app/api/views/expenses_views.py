@@ -17,12 +17,12 @@ EXPENSE_RECORDS = ExpenseRecords()
 def post_expense():
     '''post expenses endpoint'''
     try:
-        data = request.get_json()
+        form_data = request.get_json()
 
-        date = data["date"]
-        amount = data["amount"]
-        account = data["account"]
-        description = data["description"]
+        date = form_data["date"]
+        amount = form_data["amount"]
+        account = form_data["account"]
+        description = form_data["description"]
 
         name = account
 
