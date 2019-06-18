@@ -19,10 +19,10 @@ def post_expense():
     try:
         data = request.get_json()
 
-        date = data["date"]
-        amount = data["amount"]
-        account = data["account"]
-        description = data["description"]
+        date = request.get_json('date')
+        amount = request.get_json('amount')
+        account = request.get_json('account')
+        description = request.get_json('description')
 
         if not description.strip():
             return jsonify({"error": "Description cannot be empty"}), 400
@@ -59,7 +59,7 @@ def post_expense():
                     return jsonify({"message":"Expense already created"})
 
         try:
-            return EXPENSE_RECORDS.add_expense(date, account, amount, description)
+            return EXPENSE_RECORDS.add_expense(format_date, account, amount, description)
 
         except (psycopg2.Error) as error:
             print(error)

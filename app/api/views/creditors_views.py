@@ -44,7 +44,7 @@ def post_credit():
                     return jsonify({"message":"creditor already posted"})
 
         try:
-            return CREDITORS_RECORDS.add_creditor(name, amount, description, date)
+            return CREDITORS_RECORDS.add_creditor(name, amount, description, format_date)
 
         except (psycopg2.Error) as error:
             return jsonify(error)

@@ -44,7 +44,7 @@ def post_debt():
                     return jsonify({"message":"Debt already posted"})
 
         try:
-            return DEBT_RECORDS.add_debt(name, amount, description, date)
+            return DEBT_RECORDS.add_debt(name, amount, description, format_date)
 
         except (psycopg2.Error) as error:
             return jsonify(error)
