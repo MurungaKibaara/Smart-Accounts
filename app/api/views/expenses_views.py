@@ -6,6 +6,7 @@ from psycopg2.extras import RealDictCursor
 from flask import Blueprint, request, jsonify, make_response
 from app.api.models.expenses_model import ExpenseRecords, view_expenses
 from app.api.models.database_connection import init_db
+from app.api.utils.validation import validate
 
 INIT_DB = init_db()
 
@@ -53,6 +54,8 @@ def post_expense():
                     
     except KeyError:
         return jsonify({"error": "a key is missing"}), 400
+    except form_data = None:
+        return jsonify({"error":"form data is empty"})
 
 
 @EXPENSES.route('/expenses', methods=['GET'])
