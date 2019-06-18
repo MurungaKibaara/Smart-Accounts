@@ -21,8 +21,8 @@ def post_expense():
 
         date = data['date']
         amount = data['amount']
-        account = date['account']
-        description = ['description']
+        account = data['account']
+        description = data['description']
 
         name = account
 
