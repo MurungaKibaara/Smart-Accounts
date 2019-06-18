@@ -62,7 +62,8 @@ def post_expense():
             return EXPENSE_RECORDS.add_expense(date, account, amount, description)
 
         except (psycopg2.Error) as error:
-            return jsonify(error)
+            print(error)
+            return jsonify({"error":"error posting to database"})
                     
     except KeyError:
         return jsonify({"error": "a key is missing"}), 400

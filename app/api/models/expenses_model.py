@@ -38,6 +38,9 @@ class ExpenseRecords():
             cur = self.database.cursor()
             cur.execute("ROLLBACK")
             self.database.commit()
+            print(error)
+
+            return jsonify({"error":"error posting to database"})
 
     def get_all_expenses(self):
         '''Get all questions'''

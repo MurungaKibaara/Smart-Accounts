@@ -40,6 +40,10 @@ class CreditorsRecords():
             cur.execute("ROLLBACK")
             self.database.commit()
 
+            print(error)
+
+            return jsonify({"error":"error posting to database"})
+
     def get_all_creditors(self):
         '''Get all creditors'''
         try:
