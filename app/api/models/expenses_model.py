@@ -74,6 +74,20 @@ class ExpenseRecords():
         except psycopg2.Error:
             return jsonify({"error":"error retrieving data from database"}), 400
 
+    def reporting(self):
+        '''Generate Reports'''
+        try:
+            cur = self.database.cursor()
+            cur.execute("""  SELECT SUM(amount) FROM expenses """)
+            data = cur.fetchall()
+
+            total_amount= data[0]
+
+            return jsonify({'total': total_amount})
+
+        except psycopg2.Error as error:
+            return jsonify({"error":"encountered problem while retrieving data from database"}), 400
+
 def view_expenses():
     '''Search for an expense using date'''
     try:
@@ -101,6 +115,8 @@ def view_expenses():
         return jsonify(error)
     except KeyError:
         return jsonify({"error":"a key is missing"})
+
+    
 
 
    

@@ -77,3 +77,8 @@ def query_by_name():
 def update_repayments():
     '''Update records'''
     return CREDITORS_RECORDS.credit_repayment_records()
+
+@CREDITORS.route('creditor/reporting', methods=['GET'])
+def totals():
+    '''Total credit'''
+    return CREDITORS_RECORDS.reporting()

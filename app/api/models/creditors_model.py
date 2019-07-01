@@ -170,3 +170,16 @@ class CreditorsRecords():
 
         except KeyError:
             return jsonify({"error":"a key is missing"})
+    
+    def reporting(self):
+        '''Generate Reports'''
+
+        cur = self.database.cursor()
+        cur.execute("""  SELECT SUM(amount) FROM creditors """)
+        data = cur.fetchall()
+
+        total_amount= data[0]
+
+        return jsonify({'total': total_amount})
+
+

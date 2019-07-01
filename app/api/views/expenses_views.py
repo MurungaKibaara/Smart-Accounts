@@ -74,3 +74,8 @@ def get_one_expense(expense_id):
 def query_by_date():
     '''Query via date'''
     return view_expenses()
+
+@EXPENSES.route('expenses/reporting', methods=['GET'])
+def totals():
+    '''Total debt'''
+    return EXPENSE_RECORDS.reporting()

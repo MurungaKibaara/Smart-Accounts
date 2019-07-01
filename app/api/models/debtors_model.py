@@ -165,3 +165,18 @@ class DebtRecords():
 
         except KeyError:
             return jsonify({"error":"a key is missing"})
+
+    def reporting(self):
+        '''Generate Reports'''
+        try:
+            cur = self.database.cursor()
+            cur.execute("""  SELECT SUM(amount) FROM debtors """)
+            data = cur.fetchall()
+
+            total_amount= data[0]
+
+            return jsonify({'total': total_amount})
+
+        except psycopg2.Error as error:
+            return jsonify({"error":"encountered problem while retrieving data from database"})
+
