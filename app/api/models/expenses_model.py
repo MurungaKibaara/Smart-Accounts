@@ -88,6 +88,33 @@ class ExpenseRecords():
         except psycopg2.Error as error:
             return jsonify({"error":"encountered problem while retrieving data from database"}), 400
 
+    def view_expenses_by_account(self):
+        '''Search for an expense using date'''
+        try:
+            account = request.get_json()["account"]
+
+            if not account.strip():
+                return jsonify({"error": "account cannot be empty"}), 400
+
+            if not re.match(r"^[A-Za-z][a-zA-Z]", account):
+                return jsonify({"error":"input valid account"}), 400
+
+            cur = self.database.cursor(cursor_factory=RealDictCursor)
+            cur.execute(
+                """  SELECT * FROM expenses WHERE account = '%s' """ % (account))
+            data = cur.fetchall()
+
+            if data is None:
+                return jsonify({"message":"name user does not exist"})
+
+            return jsonify(data), 200
+
+        except (psycopg2.Error) as error:
+            return jsonify(error)
+
+        except KeyError:
+            return jsonify({"error":"a key is missing"})
+
 def view_expenses():
     '''Search for an expense using date'''
     try:

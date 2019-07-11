@@ -75,6 +75,11 @@ def query_by_date():
     '''Query via date'''
     return view_expenses()
 
+@EXPENSES.route('expenses/account', methods=['POST'])
+def query_by_name():
+    '''Query via date'''
+    return EXPENSE_RECORDS.view_expenses_by_account()
+
 @EXPENSES.route('expenses/reporting', methods=['GET'])
 def totals():
     '''Total debt'''
